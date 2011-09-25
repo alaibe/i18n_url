@@ -1,0 +1,48 @@
+= I18n Url
+
+I18n_url is a plugin for Ruby on Rails that lets you easily translate your routes trough the I18n api
+
+Works with Rails 3.0 and 3.1
+
+= How to use
+
+Just add gem "i18n_url" in your gemfile
+
+This provide you a new method your route file : i18n_url
+
+Exemple of use:
+ 
+ i18n_url do
+   match "home" => "users#edit", as: :my_home
+ end
+
+All routes in the block will generate for each locale a new route : 
+
+For :en by exemple :
+ 
+  en_home => /en/home
+  
+This plugin also provides an helper for your controller : extract_locale_from_url
+So you have juste to do : 
+
+  class ApplicationController < ActionController::Base
+ 
+    before_filter :set_locale
+  
+    
+    def set_locale
+      I18n.locale = extract_locale_from_url
+    end
+
+  end
+
+You're locale file have to be like this : 
+en:
+  routes:
+    home: home
+  
+
+This also provide an helper
+= Contributors
+
+*Anthony Laibe
