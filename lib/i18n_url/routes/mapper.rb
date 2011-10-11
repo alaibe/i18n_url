@@ -46,8 +46,11 @@ module ActionDispatch::Routing
 
       def translate_route path
         path.split("/").each do |word|
-          next if word[0] == ":"
-          (@localized_path ||= []) << I18n.t(word,:scope => :routes, :default => word)
+          if word[0] == ":"
+            (@localized_path ||= []) << word
+          else
+            (@localized_path ||= []) << I18n.t(word,:scope => :routes, :default => word)
+          end
         end
       end
     end
